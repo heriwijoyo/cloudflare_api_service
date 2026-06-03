@@ -1,0 +1,21 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "apiservice",
+	"main": "src/index.ts",
+	"compatibility_date": "2026-06-02",
+	"observability": {
+		"enabled": true
+	},
+	"upload_source_maps": true,
+	"compatibility_flags": [
+		"nodejs_compat"
+	],
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "demo",
+			"database_id": "e8d95ac3-df93-4b46-9b41-ff18a9a5844c",
+			"migrations_dir": "./src/database/migrations"
+		}
+	]
+}
