@@ -1,5 +1,6 @@
 import { BatchQueryOperation, QueryOperation } from "../database/queryOperation";
 import { QueryResult } from "../database/queryTemplates";
+import { ExternalRequest } from "../services/integration/serviceIntegrationModel";
 import { ServiceAction, ServiceContext, ServiceResult } from "../services/serviceBaseModels";
 
 export async function logServiceProcess(
@@ -24,6 +25,18 @@ export async function logDbException(
     serviceContext: ServiceContext,
     operation: QueryOperation | BatchQueryOperation,
     message: string
+) {
+    //TODO: Implement logging
+}
+
+export async function logIntegrationProcess(
+    serviceContext: ServiceContext,
+    startTime: number,
+    endTime: number,
+    success: boolean,
+    errorMessage: string | null,
+    request: ExternalRequest,
+    response: Response | null
 ) {
     //TODO: Implement logging
 }
