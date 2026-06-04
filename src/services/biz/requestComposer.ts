@@ -1,5 +1,13 @@
-import { ServiceContext } from "../serviceBaseModels";
+import { ServiceContext, ServiceRequest } from "../serviceBaseModels";
 import { BizOrderServiceCreateRequest } from "./bizOrderService";
+
+export function composeServiceRequest(
+    context: ServiceContext,
+): ServiceRequest {
+    return {
+        context: context
+    }
+}
 
 export function composeBizOrderServiceCreateRequest(
     context: ServiceContext,

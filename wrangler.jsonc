@@ -19,7 +19,11 @@
 		}
 	],
 	"vars": {
-		"QUEUE_MAIL_SENDER_DELAY": 900
+		"MAIL_SENDER_CONFIG": {
+			"QUEUE_SEND_DELAY": 900,
+			"AWS_SES_REGION": "ap-southeast-1",
+			"AWS_SES_FROM_ADDRESS": "noreply@myapp.com"
+		}
 	},
 	"durable_objects": {
 		"bindings": [

@@ -1,7 +1,7 @@
 import { BatchQueryOperation, QueryOperation } from "../../database/queryOperation"
 import { executeBatchQuery, executeSingleQuery, QueryResult } from "../../database/queryTemplates"
 import { assertQueryResultSuccess } from "../../utils/serviceAssertUtil"
-import { QueueMailSend, QueueStatus } from "../model/bizModel"
+import { MailScenario, QueueMailSend, QueueStatus } from "../model/bizModel"
 import { ServiceContext, ServiceError, ServiceResultCode } from "../serviceBaseModels"
 
 export interface QueueMailSendRow {
@@ -55,7 +55,7 @@ export async function insertQueueMailSend(
                             queueMailSends[index].templateSubject,
                             queueMailSends[index].templateContentHtml,
                             queueMailSends[index].templateContentText,
-                            queueMailSends[index].variables,
+                            JSON.stringify(queueMailSends[index].variables),
                             queueMailSends[index].status,
                             queueMailSends[index].retryCount,
                             queueMailSends[index].maxRetryCount
@@ -129,14 +129,14 @@ function convertQueueMailSend(row: QueueMailSendRow): QueueMailSend {
     return {
         queueMailSendId: row.queue_mail_send_id,
         traceId: row.trace_id,
-        scenario: row.scenario,
+        scenario: row.scenario as MailScenario,
         priority: row.priority,
         sender: row.sender,
         receiver: row.receiver,
         templateSubject: row.template_subject,
         templateContentHtml: row.template_content_html,
         templateContentText: row.template_content_text,
-        variables: row.variables,
+        variables: JSON.parse(row.variables),
         status: row.status as QueueStatus,
         maxRetryCount: row.max_retry_count,
         retryCount: row.retry_count

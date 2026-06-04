@@ -28,18 +28,38 @@ export enum QueueStatus {
     PENDING = 3
 }
 
+export enum MailScenario {
+    OTP = 'OTP',
+    REGISTRATION = 'REGISTRATION',
+    ORDER = 'ORDER'
+}
+
 export interface QueueMailSend {
     queueMailSendId: number
     traceId: string
-    scenario: string
+    scenario: MailScenario
     priority: number
     sender: string
     receiver: string
     templateSubject: string
     templateContentHtml: string
     templateContentText: string
-    variables: string
+    variables: {
+        key: string
+        value: string
+    }[]
     status: QueueStatus
     maxRetryCount: number
     retryCount: number
+}
+
+export function mailPriority(scenario: MailScenario): number {
+    switch (scenario) {
+        case MailScenario.OTP:
+            return 10
+        case MailScenario.REGISTRATION:
+            return 30
+        case MailScenario.ORDER:
+            return 20
+    }
 }

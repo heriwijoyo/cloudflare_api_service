@@ -2,8 +2,9 @@ import { routeServiceAction } from "./actionRouter";
 import { randomUUID } from "crypto";
 import { ServiceAction, ServiceContext, ServiceRequest, ServiceResult, ServiceResultCode } from "./services/serviceBaseModels";
 import { Env } from "./env";
-import { composeBizOrderServiceCreateRequest } from "./services/biz/requestComposer";
+import { composeBizOrderServiceCreateRequest, composeServiceRequest } from "./services/biz/requestComposer";
 import { bizOrderServiceCreate, BizOrderServiceCreateRequest } from "./services/biz/bizOrderService";
+import { simulateQueueAndSendMail } from "./services/biz/bizMailService";
 
 export { QueueEmailSenderDO } from "./services/durableObject/queueEmailSender";
 
@@ -37,6 +38,12 @@ export default {
 				serviceRequest = composeBizOrderServiceCreateRequest(serviceContext, requestJson)
 				serviceResult = await bizOrderServiceCreate(serviceRequest as BizOrderServiceCreateRequest)
 				break
+
+			case ServiceAction.SIMULATE_QUEUE_AND_SEND_MAIL:
+				serviceRequest = composeServiceRequest(serviceContext)
+				serviceResult = await simulateQueueAndSendMail(serviceRequest)
+				break
+
 			default:
 				serviceResult = composeResultNotFound(traceId)
 				break

@@ -6,8 +6,8 @@ export function routeServiceAction(request: Request): ServiceAction {
     if (request.method === 'POST' && url.pathname === '/createOrder') {
         return ServiceAction.CREATE_ORDER
     }
-    if (request.method === 'POST' && url.pathname === '/increaseOrderCounter') {
-        return ServiceAction.INCREASE_ORDER_COUNTER
+    if (request.method === 'POST' && url.pathname === '/simulateQueueAndSendMail') {
+        return ServiceAction.SIMULATE_QUEUE_AND_SEND_MAIL
     }
 
     return ServiceAction.UNKNOWN

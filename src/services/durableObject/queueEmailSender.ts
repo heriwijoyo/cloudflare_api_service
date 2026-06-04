@@ -62,7 +62,7 @@ export class QueueEmailSenderDO extends DurableObject {
         )
 
         if (shouldSetNextAlarm) {
-            await this.ctx.storage.setAlarm(Date.now() + this.svcEnv.QUEUE_MAIL_SENDER_DELAY)
+            await this.ctx.storage.setAlarm(Date.now() + this.svcEnv.MAIL_SENDER_CONFIG.QUEUE_SEND_DELAY)
         }
     }
 }
