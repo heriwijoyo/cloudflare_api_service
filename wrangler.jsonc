@@ -17,5 +17,24 @@
 			"database_id": "e8d95ac3-df93-4b46-9b41-ff18a9a5844c",
 			"migrations_dir": "./src/database/migrations"
 		}
+	],
+	"vars": {
+		"QUEUE_MAIL_SENDER_DELAY": 900
+	},
+	"durable_objects": {
+		"bindings": [
+			{
+				"name": "QUEUE_MAIL_SENDER",
+				"class_name": "QueueEmailSenderDO"
+			}
+		]
+	},
+	"migrations": [
+		{
+			"tag": "v1",
+			"new_classes": [
+				"QueueEmailSenderDO"
+			]
+		}
 	]
 }

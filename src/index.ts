@@ -5,6 +5,8 @@ import { Env } from "./env";
 import { composeBizOrderServiceCreateRequest } from "./services/biz/requestComposer";
 import { bizOrderServiceCreate, BizOrderServiceCreateRequest } from "./services/biz/bizOrderService";
 
+export { QueueEmailSenderDO } from "./services/durableObject/queueEmailSender";
+
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 

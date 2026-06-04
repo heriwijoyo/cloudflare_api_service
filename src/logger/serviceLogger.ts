@@ -40,3 +40,13 @@ export async function logIntegrationProcess(
 ) {
     //TODO: Implement logging
 }
+
+export async function logQueueMailSendExecution(
+    serviceContext: ServiceContext,
+    startTime: number,
+    endTime: number,
+    success: boolean,
+    message: string
+) {
+    //TODO: Implement logging
+}
