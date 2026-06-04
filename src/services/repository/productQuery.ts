@@ -2,6 +2,7 @@ import { QueryOperation } from "../../database/queryOperation"
 import { executeSingleQuery, QueryResult } from "../../database/queryTemplates"
 import { ServiceContext } from "../serviceBaseModels"
 import { Product } from "../model/bizModel"
+import { assertQueryResultSuccess } from "../../utils/serviceAssertUtil"
 
 export interface ProductRow {
     product_id: string
@@ -30,6 +31,7 @@ export async function getProductsByIds(
             result.dbDuration = execResult.meta.duration
         }
     )
+    assertQueryResultSuccess(result, QueryOperation.READ_PRODUCT_BY_IDS)
     if (result.rows) {
         return result.rows.map(convertProduct)
     }

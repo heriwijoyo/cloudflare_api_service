@@ -1,3 +1,4 @@
+import { BatchQueryOperation, QueryOperation } from "../database/queryOperation"
 import { QueryResult } from "../database/queryTemplates"
 import { ServiceError, ServiceResultCode } from "../services/serviceBaseModels"
 
@@ -24,13 +25,12 @@ export function assertNotBlank(
 
 export function assertQueryResultSuccess(
     queryResult: QueryResult,
-    resultCode: ServiceResultCode,
-    message: string
+    operation: QueryOperation | BatchQueryOperation
 ) {
     if (!queryResult.success) {
         throw new ServiceError(
-            resultCode,
-            message
+            ServiceResultCode.QUERY_OPERATION_FAILED,
+            `Operation ${operation} failed`
         )
     }
 }
