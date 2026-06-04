@@ -100,6 +100,31 @@ export async function fetchPrioritizedQueueMailSend(
     return null
 }
 
+export async function updateStatusAndRetryCount(
+    serviceContext: ServiceContext,
+    queueMailSendId: number,
+    status: QueueStatus,
+    retryCount: number
+) {
+    const result = await executeSingleQuery(
+        serviceContext, QueryOperation.UPDATE_QUEUE_MAIL_SEND_STATUS_AND_RETRY_COUNT,
+        async function (table: string, result: QueryResult) {
+            const execResult = await serviceContext.env.DB.prepare(`
+                    UPDATE ${table}
+                    SET status = ?, retry_count = ?
+                    WHERE queue_mail_send_id = ?
+                `)
+                .bind(status, retryCount, queueMailSendId)
+                .run();
+
+            result.success = true
+            result.rows = execResult.results
+            result.dbDuration = execResult.meta.duration
+        }
+    )
+    assertQueryResultSuccess(result, QueryOperation.UPDATE_QUEUE_MAIL_SEND_STATUS_AND_RETRY_COUNT)
+}
+
 function convertQueueMailSend(row: QueueMailSendRow): QueueMailSend {
     return {
         queueMailSendId: row.queue_mail_send_id,

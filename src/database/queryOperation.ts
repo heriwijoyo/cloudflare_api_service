@@ -5,17 +5,25 @@ export enum QueryOperation {
     CREATE_ORDER = 'CREATE_ORDER',
     CREATE_ORDER_ITEM = 'CREATE_ORDER_ITEM',
     CREATE_QUEUE_MAIL_SEND = 'CREATE_QUEUE_MAIL_SEND',
-    READ_QUEUE_MAIL_SEND_PRIORITIZED = 'READ_QUEUE_MAIL_SEND_PRIORITIZED'
+    READ_QUEUE_MAIL_SEND_PRIORITIZED = 'READ_QUEUE_MAIL_SEND_PRIORITIZED',
+    UPDATE_QUEUE_MAIL_SEND_STATUS_AND_RETRY_COUNT = 'UPDATE_QUEUE_MAIL_SEND_STATUS_AND_RETRY_COUNT'
 }
 
 export function getTable(operation: QueryOperation): Table {
     switch (operation) {
+        case QueryOperation.READ_PRODUCT_BY_IDS:
+            return Table.PRODUCTS
+
         case QueryOperation.CREATE_ORDER:
-            return Table.ORDERS;
+            return Table.ORDERS
+
+        case QueryOperation.CREATE_ORDER_ITEM:
+            return Table.ORDER_ITEMS
+
         case QueryOperation.CREATE_QUEUE_MAIL_SEND:
-            return Table.QUEUE_MAIL_SEND;
-        default:
-            throw new Error("Invalid query operation");
+        case QueryOperation.READ_QUEUE_MAIL_SEND_PRIORITIZED:
+        case QueryOperation.UPDATE_QUEUE_MAIL_SEND_STATUS_AND_RETRY_COUNT:
+            return Table.QUEUE_MAIL_SEND
     }
 }
 
