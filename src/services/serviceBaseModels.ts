@@ -28,6 +28,8 @@ export enum ServiceResultCode {
     SYSTEM_ERROR = 'E000',
     PARAM_ILLEGAL = 'E001',
     RESOURCE_NOT_FOUND = 'E002',
+    UNSUPPORTED_OPERATION = 'E003',
+    QUERY_OPERATION_FAILED = 'E004'
 }
 
 export class ServiceError extends Error {
