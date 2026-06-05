@@ -1,6 +1,7 @@
 import { BatchQueryOperation, QueryOperation } from "../database/queryOperation";
 import { QueryResult } from "../database/queryTemplates";
 import { ExternalRequest } from "../services/integration/serviceIntegrationModel";
+import { AccIdentifierType, AccumulationCycle, AccumulationKey } from "../services/model/bizModel";
 import { ServiceAction, ServiceContext, ServiceResult } from "../services/serviceBaseModels";
 
 export async function logServiceProcess(
@@ -47,6 +48,21 @@ export async function logQueueMailSendExecution(
     endTime: number,
     success: boolean,
     message: string
+) {
+    //TODO: Implement logging
+}
+
+export async function logBizLimitExceeded(
+    serviceContext: ServiceContext,
+    bizExceedLimits: {
+        identifierType: AccIdentifierType
+        identifier: string
+        accumulationKey: AccumulationKey
+        accumulationCycle: AccumulationCycle
+        accumulationCycleId: string
+        accumulationLimit: number
+        currentAccumulation: number
+    }[]
 ) {
     //TODO: Implement logging
 }

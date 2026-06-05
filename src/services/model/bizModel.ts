@@ -63,3 +63,47 @@ export function mailPriority(scenario: MailScenario): number {
             return 20
     }
 }
+
+export enum ServiceTierCode {
+    FREE = 'FREE',
+    PLUS = 'PLUS',
+    PRO = 'PRO'
+}
+
+export interface AccumulationRule {
+    identifierType: AccIdentifierType
+    accumulationKey: AccumulationKey
+    accumulationCycle: AccumulationCycle
+    maxLimit: number
+}
+
+export interface ServiceTier {
+    serviceTierCode: ServiceTierCode
+    accumulationRules: AccumulationRule[]
+}
+
+export enum AccIdentifierType {
+    USER = 'USER'
+}
+
+export enum AccumulationKey {
+    PRODUCT = 'PRODUCT',
+    ORDER = 'ORDER'
+}
+
+export enum AccumulationCycle {
+    LIFETIME = 'LIFETIME',
+    DAILY = 'DAILY',
+    WEEKLY = 'WEEKLY',
+    MONTHLY = 'MONTHLY'
+}
+
+export interface Accumulation {
+    accumulationId: string
+    identifierType: AccIdentifierType
+    identifier: string
+    accumulationKey: AccumulationKey
+    accumulationCycle: AccumulationCycle
+    accumulationCycleId: string
+    accumulationValue: number
+}

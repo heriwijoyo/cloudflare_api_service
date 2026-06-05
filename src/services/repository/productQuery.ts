@@ -1,7 +1,7 @@
-import { QueryOperation } from "../../database/queryOperation"
-import { executeSingleQuery, QueryResult } from "../../database/queryTemplates"
-import { ServiceContext } from "../serviceBaseModels"
-import { Product } from "../model/bizModel"
+import { BatchQueryOperation, QueryOperation } from "../../database/queryOperation"
+import { executeBatchQuery, executeSingleQuery, QueryResult } from "../../database/queryTemplates"
+import { ServiceContext, ServiceError, ServiceResultCode } from "../serviceBaseModels"
+import { Accumulation, Product } from "../model/bizModel"
 import { assertQueryResultSuccess } from "../../utils/serviceAssertUtil"
 
 export interface ProductRow {
@@ -36,6 +36,43 @@ export async function getProductsByIds(
         return result.rows.map(convertProduct)
     }
     return []
+}
+
+export async function createProductAndAccumulate(
+    serviceContext: ServiceContext,
+    product: Product,
+    accumulations: Accumulation[]
+) {
+    const accOperations = accumulations.map(acc => QueryOperation.UPDATE_ACCUMULATION)
+    const result = await executeBatchQuery(
+        serviceContext, BatchQueryOperation.CREATE_PRODUCT_AND_ACCUMULATE,
+        function (operation: QueryOperation, table: string, index: number): D1PreparedStatement {
+            switch (operation) {
+                case QueryOperation.CREATE_PRODUCT:
+                    return serviceContext.env.DB.prepare(`
+                        INSERT INTO ${table} (product_id, name, price)
+                        VALUES (?, ?, ?)
+                    `).bind(product.productId, product.name, product.price)
+
+                case QueryOperation.UPDATE_ACCUMULATION:
+                    const acc = accumulations[index - 1]
+                    return serviceContext.env.DB.prepare(`
+                        UPDATE ${table}
+                        SET accumulation_value = ?
+                        WHERE accumulation_id = ?
+                    `)
+                        .bind(
+                            acc.accumulationValue, acc.accumulationId
+                        )
+
+                default:
+                    throw new ServiceError(ServiceResultCode.UNSUPPORTED_OPERATION, `Unsupported operation: ${operation}`)
+            }
+        },
+        QueryOperation.CREATE_PRODUCT,
+        ...accOperations
+    )
+    assertQueryResultSuccess(result, BatchQueryOperation.CREATE_PRODUCT_AND_ACCUMULATE)
 }
 
 function convertProduct(row: ProductRow): Product {

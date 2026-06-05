@@ -30,6 +30,10 @@
 			{
 				"name": "QUEUE_MAIL_SENDER",
 				"class_name": "QueueEmailSenderDO"
+			},
+			{
+				"name": "PRODUCT_SERVICE_DO",
+				"class_name": "ProductServiceDO"
 			}
 		]
 	},
@@ -38,6 +42,12 @@
 			"tag": "v1",
 			"new_classes": [
 				"QueueEmailSenderDO"
+			]
+		},
+		{
+			"tag": "v2",
+			"new_classes": [
+				"ProductServiceDO"
 			]
 		}
 	]
