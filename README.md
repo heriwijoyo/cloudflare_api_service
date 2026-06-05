@@ -15,11 +15,6 @@ This repository serves as a portfolio of architectural patterns designed to solv
 The architecture routes stateless edge traffic through stateful Durable Objects when strict concurrency is required, before committing atomic batches to the D1 global database.
 
 
-```
-
-```text
-File generated successfully: README.md
-
 ```mermaid
 graph TD
     Client((Client)) -->|HTTP Request| Worker[Edge Worker Router]
