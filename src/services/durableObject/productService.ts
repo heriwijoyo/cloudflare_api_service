@@ -14,11 +14,14 @@ export class ProductServiceDO extends DurableObject {
     }
 
     async createProductAndAccumulate(
-        serviceContext: ServiceContext,
+        traceId: string,
         userId: string,
         product: Product
     ): Promise<ServiceResult> {
-        serviceContext.env = this.svcEnv
+        const serviceContext: ServiceContext = {
+            traceId: traceId,
+            env: this.svcEnv
+        }
 
         let result: ServiceResult
 

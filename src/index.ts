@@ -5,14 +5,16 @@ import { Env } from "./env";
 import { composeBizOrderServiceCreateRequest, composeServiceRequest } from "./services/biz/requestComposer";
 import { bizOrderServiceCreate, BizOrderServiceCreateRequest } from "./services/biz/bizOrderService";
 import { simulateQueueAndSendMail } from "./services/biz/bizMailService";
+import { bizProductServiceCreate } from "./services/biz/bizProductService";
 
 export { QueueEmailSenderDO } from "./services/durableObject/queueEmailSender";
+export { ProductServiceDO } from "./services/durableObject/productService";
 
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 
 		const traceId = randomUUID()
-		let requestJson: any
+		let requestJson
 		try {
 			requestJson = await request.json()
 		} catch (error) {
@@ -42,6 +44,11 @@ export default {
 			case ServiceAction.SIMULATE_QUEUE_AND_SEND_MAIL:
 				serviceRequest = composeServiceRequest(serviceContext)
 				serviceResult = await simulateQueueAndSendMail(serviceRequest)
+				break
+
+			case ServiceAction.SIMULATE_CREATE_PRODUCT_AND_ACCUMULATE:
+				serviceRequest = composeServiceRequest(serviceContext)
+				serviceResult = await bizProductServiceCreate(serviceRequest)
 				break
 
 			default:

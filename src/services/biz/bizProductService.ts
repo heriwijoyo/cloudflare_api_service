@@ -22,7 +22,7 @@ export async function bizProductServiceCreate(
 
             const productServiceDO = request.context.env.PRODUCT_SERVICE_DO.getByName(userId)
             return await productServiceDO.createProductAndAccumulate(
-                request.context, userId, product
+                request.context.traceId, userId, product
             )
         }
     )

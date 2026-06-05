@@ -103,7 +103,7 @@ export async function fetchAccumulation(
         }
     )
     assertQueryResultSuccess(result, QueryOperation.READ_ACCUMULATION)
-    if (result.rows) {
+    if (result.rows && result.rows.length > 0) {
         return convertAccumulation(result.rows[0])
     }
     return null
