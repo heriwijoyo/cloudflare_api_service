@@ -1,5 +1,5 @@
 CREATE TABLE `service_tier` (
-    `service_tier_id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    `service_tier_id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     `tier_name` TEXT NOT NULL,
     `config` TEXT NOT NULL
 );
