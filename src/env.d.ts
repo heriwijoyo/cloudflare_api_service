@@ -6,6 +6,7 @@ export interface Env {
     DB: D1Database
     QUEUE_MAIL_SENDER_DO: DurableObjectNamespace<QueueEmailSenderDO>
     PRODUCT_SERVICE_DO: DurableObjectNamespace<ProductServiceDO>
+    APPLOGGER_SERVICE: Fetcher
     MAIL_SENDER_CONFIG: {
         QUEUE_SEND_DELAY: number
         AWS_SES_REGION: string

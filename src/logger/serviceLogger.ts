@@ -11,7 +11,24 @@ export async function logServiceProcess(
     endTime: number,
     result: ServiceResult
 ) {
-    //TODO: Implement logging
+    const reqBody = {
+        traceId: serviceContext.traceId,
+        action: action,
+        startTime: startTime,
+        endTime: endTime,
+        success: result.success === true ? 1 : 0,
+        resultCode: result.code
+    }
+
+    await serviceContext.env.APPLOGGER_SERVICE.fetch(
+        new Request("http://internal/api/ingest/servicePerformance", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(reqBody)
+        })
+    )
 }
 
 export async function logDbProcess(

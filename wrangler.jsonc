@@ -18,6 +18,12 @@
 			"migrations_dir": "./src/database/migrations"
 		}
 	],
+	"services": [
+		{
+			"binding": "APPLOGGER_SERVICE",
+			"service": "applogger"
+		}
+	],
 	"vars": {
 		"MAIL_SENDER_CONFIG": {
 			"QUEUE_SEND_DELAY": 900,
