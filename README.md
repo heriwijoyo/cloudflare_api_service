@@ -143,8 +143,8 @@ curl -X POST http://localhost:8787/createOrder \\
 -d '{
   "userId": "demoUser12345",
   "products": [
-    { "productId": "prod-1", "quantity": 1 },
-    { "productId": "prod-2", "quantity": 3 }
+    { "productId": "019db4e98bb478928e527f75d01a6895", "quantity": 1 },
+    { "productId": "019db4e98bb478928e527f75d01a6896", "quantity": 3 }
   ]
 }'
 
